@@ -1,7 +1,7 @@
 resource "azurerm_container_app_environment" "aca_env" {
-  name                = "${var.project_name}-aca-env"
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  name                     = "${var.project_name}-aca-env"
+  location                 = var.location
+  resource_group_name      = var.resource_group_name
   infrastructure_subnet_id = var.aca_subnet_id
 }
 
