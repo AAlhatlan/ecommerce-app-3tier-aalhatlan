@@ -7,12 +7,10 @@ terraform {
   }
 }
 
-provider "azurerm" {
-  features {}
-}
 
 # موارد مؤقتة فقط عشان تختبر
 resource "azurerm_resource_group" "rg" {
   name     = "test-rg"
   location = "westeurope"
 }
+
