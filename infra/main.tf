@@ -35,8 +35,11 @@ module "aca" {
 module "sql" {
   source = "./modules/sql"
 
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = var.location
-  admin_login         = var.sql_admin_login
-  admin_password      = var.sql_admin_password
+  project_name          = var.project_name
+  sql_admin_login       = var.sql_admin_login
+  sql_admin_password    = var.sql_admin_password
+  sql_pe_subnet_id      = module.network.sql_subnet_id
+  private_dns_zone_name = module.network.private_dns_zone_name
 }
+
+
