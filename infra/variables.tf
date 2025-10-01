@@ -33,5 +33,13 @@ variable "fe_tag" {
   description = "Docker image tag (e.g. latest)"
 }
 
+variable "be_image_name" {
+  type        = string
+  description = "backend Docker image name (e.g. aalhatlan/assignment-be)"
+}
 
+variable "be_tag" {
+  type        = string
+  description = "Docker image tag (e.g. latest)"
+}
 

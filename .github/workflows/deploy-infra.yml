@@ -26,6 +26,8 @@ jobs:
       # 🟠 Images
       TF_VAR_fe_image_name: ${{ vars.FE_IMAGE_NAME }}
       TF_VAR_fe_tag: ${{ vars.FE_TAG }}
+      TF_VAR_be_image_name: ${{ vars.BE_IMAGE_NAME }}
+      TF_VAR_be_tag: ${{ vars.BE_TAG }}
 
     steps:
       - name: Checkout Code
