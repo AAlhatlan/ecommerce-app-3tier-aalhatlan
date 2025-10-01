@@ -8,7 +8,8 @@ variable "location" {
   description = "Azure region where resources will be created"
 }
 
-variable "azure_credentials" {
+variable "SUBSCRIPTION_ID" {
   description = "JSON credentials for Azure Service Principal"
   type        = string
 }
+
