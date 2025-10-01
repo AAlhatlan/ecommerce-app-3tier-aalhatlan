@@ -1,9 +1,14 @@
 locals {
+  # Backend naming convention
   be_app_name             = "${lower(var.resource_prefix)}-be-app-${lower(replace(var.author, " ", "-"))}"
   service_plan_name_be    = "${lower(var.resource_prefix)}-be-service-plan-${lower(replace(var.author, " ", "-"))}"
   public_access_be        = true
   be_sku                  = "B1" # Basic plan
   be_hostname             = "${local.be_app_name}.azurewebsites.net"
+
+  # Frontend naming for dynamic CORS origin
+  fe_app_name             = "${lower(var.resource_prefix)}-fe-app-${lower(replace(var.author, " ", "-"))}"
+  fe_hostname             = "${local.fe_app_name}.azurewebsites.net"
 }
 
 #########################################
@@ -18,7 +23,7 @@ resource "azurerm_service_plan" "backend_plan" {
 }
 
 #########################################
-# 🚀 backend App Service (Linux Web App)
+# 🚀 Backend App Service (Linux Web App)
 #########################################
 resource "azurerm_linux_web_app" "backend_app" {
   name                = local.be_app_name
@@ -40,8 +45,11 @@ resource "azurerm_linux_web_app" "backend_app" {
   }
 
   app_settings = {
+    # Basic runtime settings
     PORT                        = "80"
     NODE_ENV                    = "production"
+
+    # Database configuration
     DB_SERVER                   = var.sql_server_fqdn
     DB_NAME                     = var.sql_database_name
     DB_USER                     = var.sql_admin_login
@@ -49,9 +57,15 @@ resource "azurerm_linux_web_app" "backend_app" {
     DB_ENCRYPT                  = "true"
     DB_TRUST_SERVER_CERTIFICATE = "false"
     DB_CONNECTION_TIMEOUT       = "30000"
+
+    # JWT configuration
     JWT_SECRET                  = var.jwt_secret
     JWT_EXPIRES_IN              = "7d"
-    CORS_ORIGIN                 = "https://${local.be_hostname}"
+
+    #  CORS configuration - dynamically set to frontend hostname
+    CORS_ORIGIN                 = "https://${local.fe_hostname}"
+
+    # Rate limiting
     RATE_LIMIT_WINDOW_MS        = "900000"
     RATE_LIMIT_MAX_REQUESTS     = "100"
   }
