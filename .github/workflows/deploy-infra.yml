@@ -30,11 +30,13 @@ jobs:
 
       - name: Terraform Apply
         run: |
-          terraform apply -auto-approve \
-            -var="frontend_image=${{ vars.FRONTEND_IMAGE }}" \
-            -var="backend_image=${{ vars.BACKEND_IMAGE }}" \
-            -var="resource_group_name=${{ vars.RESOURCE_GROUP }}" \
-            -var="location=${{ vars.LOCATION }}" \
-            -var="project_name=${{ vars.PROJECT_NAME }}" \
-            -var="sql_admin_login=${{ secrets.SQL_ADMIN_LOGIN }}" \
-            -var="sql_admin_password=${{ secrets.SQL_ADMIN_PASSWORD }}"
+         terraform apply -auto-approve \
+         -var="aca_subnet_id=${{ vars.ACA_SUBNET_ID }}" \
+         -var="resource_group_name=${{ vars.RESOURCE_GROUP }}" \
+         -var="location=${{ vars.LOCATION }}" \
+         -var="project_name=${{ vars.PROJECT_NAME }}" \
+         -var="frontend_image=${{ vars.FRONTEND_IMAGE }}" \
+         -var="backend_image=${{ vars.BACKEND_IMAGE }}" \
+         -var="sql_admin_login=${{ secrets.SQL_ADMIN_LOGIN }}" \
+         -var="sql_admin_password=${{ secrets.SQL_ADMIN_PASSWORD }}"
+
