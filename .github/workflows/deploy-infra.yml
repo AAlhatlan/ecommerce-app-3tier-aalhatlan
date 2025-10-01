@@ -1,0 +1,40 @@
+name: "Deploy Infrastructure with Terraform"
+
+on:
+  workflow_dispatch:  # تشغّله يدويًا متى ما بغيت
+  push:
+    branches:
+      - infra-changes   # أو أي فرع خاص بالتيرافورم
+
+jobs:
+  terraform_deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Azure Login (Service Principal)
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Apply
+        run: |
+          terraform apply -auto-approve \
+            -var="frontend_image=${{ vars.FRONTEND_IMAGE }}" \
+            -var="backend_image=${{ vars.BACKEND_IMAGE }}" \
+            -var="resource_group_name=${{ vars.RESOURCE_GROUP }}" \
+            -var="location=${{ vars.LOCATION }}" \
+            -var="project_name=${{ vars.PROJECT_NAME }}" \
+            -var="sql_admin_login=${{ secrets.SQL_ADMIN_LOGIN }}" \
+            -var="sql_admin_password=${{ secrets.SQL_ADMIN_PASSWORD }}"
