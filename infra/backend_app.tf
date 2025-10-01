@@ -24,7 +24,7 @@ resource "azurerm_linux_web_app" "backend_app" {
   name                = local.be_app_name
   location            = var.location
   resource_group_name = var.resource_group_name
-  service_plan_id     = azurerm_service_plan.fbackend_plan.id
+  service_plan_id     = azurerm_service_plan.backend_plan.id
   public_network_access_enabled = local.public_access_be
 
   site_config {
