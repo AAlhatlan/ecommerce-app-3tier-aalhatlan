@@ -19,7 +19,7 @@ terraform {
 
 provider "azurerm" {
   features {}
-  subscription_id = jsondecode(var.azure_credentials).subscriptionId
+  subscription_id = var.subscription_id
 
 }
 
