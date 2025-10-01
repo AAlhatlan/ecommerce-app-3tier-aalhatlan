@@ -9,7 +9,7 @@ locals {
  # Frontend naming for dynamic CORS origin (for backend CORS)
 frontend_app_name_for_cors = "${lower(var.resource_prefix)}-fe-app-${lower(replace(var.author, " ", "-"))}"
 frontend_hostname_for_cors = "${local.frontend_app_name_for_cors}.azurewebsites.net"
-
+}
 
 #########################################
 # 🧰 App Service Plan (Linux)
