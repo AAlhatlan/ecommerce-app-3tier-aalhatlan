@@ -35,11 +35,15 @@ module "aca" {
 module "sql" {
   source = "./modules/sql"
 
-  project_name          = var.project_name
-  sql_admin_login       = var.sql_admin_login
-  sql_admin_password    = var.sql_admin_password
-  sql_pe_subnet_id      = module.network.sql_subnet_id
-  private_dns_zone_name = module.network.private_dns_zone_name
+  project_name         = var.project_name
+  resource_group_name  = var.resource_group_name
+  location             = var.location
+  sql_admin_login      = var.sql_admin_login
+  sql_admin_password   = var.sql_admin_password
+  sql_pe_subnet_id     = var.sql_pe_subnet_id
+  private_dns_zone_name = var.private_dns_zone_name
 }
+
+
 
 
