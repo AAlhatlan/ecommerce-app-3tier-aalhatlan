@@ -19,6 +19,7 @@ terraform {
 
 provider "azurerm" {
   features {}
+  subscription_id = trimspace(env.AZURE_SUBSCRIPTION_ID)
 
 }
 
