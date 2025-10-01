@@ -8,7 +8,3 @@ variable "location" {
   description = "Azure region where resources will be created"
 }
 
-variable "tags" {
-  type        = map(string)
-  description = "Tags to assign to resources"
-}
