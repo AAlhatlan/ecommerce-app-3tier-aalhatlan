@@ -29,7 +29,12 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan
+        run: |
+         terraform plan
+          -var="subscription_id=${{ secrets.SUBSCRIPTION_ID }}" \
+          -var="location=westeurope" \
+          -var="resource_group_name=my-resource-group"
+        
       
       - name: Terraform Apply
         run: |
