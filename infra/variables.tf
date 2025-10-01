@@ -34,3 +34,13 @@ variable "sql_admin_password" {
   type        = string
   sensitive   = true
 }
+
+variable "aca_subnet_id" {
+  description = "Subnet ID for ACA environment"
+  type        = string
+}
+
+variable "sql_fqdn" {
+  description = "Fully qualified domain name of the SQL server"
+  type        = string
+}
