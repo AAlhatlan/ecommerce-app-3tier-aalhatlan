@@ -6,10 +6,10 @@ locals {
   be_sku                  = "B1" # Basic plan
   be_hostname             = "${local.be_app_name}.azurewebsites.net"
 
-  # Frontend naming for dynamic CORS origin
-  fe_app_name             = "${lower(var.resource_prefix)}-fe-app-${lower(replace(var.author, " ", "-"))}"
-  fe_hostname             = "${local.fe_app_name}.azurewebsites.net"
-}
+ # Frontend naming for dynamic CORS origin (for backend CORS)
+frontend_app_name_for_cors = "${lower(var.resource_prefix)}-fe-app-${lower(replace(var.author, " ", "-"))}"
+frontend_hostname_for_cors = "${local.frontend_app_name_for_cors}.azurewebsites.net"
+
 
 #########################################
 # 🧰 App Service Plan (Linux)
@@ -63,7 +63,7 @@ resource "azurerm_linux_web_app" "backend_app" {
     JWT_EXPIRES_IN              = "7d"
 
     #  CORS configuration - dynamically set to frontend hostname
-    CORS_ORIGIN                 = "https://${local.fe_hostname}"
+    CORS_ORIGIN = "https://${local.frontend_hostname_for_cors}"
 
     # Rate limiting
     RATE_LIMIT_WINDOW_MS        = "900000"
