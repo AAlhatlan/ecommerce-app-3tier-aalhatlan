@@ -30,8 +30,10 @@ jobs:
 
       
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: |
+         terraform apply -auto-approve \
           -var="subscription_id=${{ secrets.SUBSCRIPTION_ID }}" \
-          -var="location=${{ vars.LOCATION }}"\
-          -var="resource_group_name=${{ vars.RESOURCE_GROUP_NAME }}"
+          -var="location=westeurope" \
+          -var="resource_group_name=my-resource-group"
+
 
