@@ -11,22 +11,8 @@ provider "azurerm" {
   features {}
 }
 
-# 🚫 تعطيل الموديولات مؤقتًا
-# module "aca" {
-#   source = "./modules/aca"
-#   # arguments...
-# }
-
-# module "sql" {
-#   source = "./modules/sql"
-#   # arguments...
-# }
-
+# موارد مؤقتة فقط عشان تختبر
 resource "azurerm_resource_group" "rg" {
-  name     = "temporary-rg"
+  name     = "test-rg"
   location = "westeurope"
-}
-
-output "rg_name" {
-  value = azurerm_resource_group.rg.name
 }
