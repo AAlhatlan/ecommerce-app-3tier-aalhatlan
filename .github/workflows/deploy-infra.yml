@@ -38,5 +38,6 @@ jobs:
          -var="frontend_image=${{ vars.FRONTEND_IMAGE }}" \
          -var="backend_image=${{ vars.BACKEND_IMAGE }}" \
          -var="sql_admin_login=${{ secrets.SQL_ADMIN_LOGIN }}" \
+         -var="sql_fqdn=${{ vars.SQL_FQDN }}" \
          -var="sql_admin_password=${{ secrets.SQL_ADMIN_PASSWORD }}"
 
