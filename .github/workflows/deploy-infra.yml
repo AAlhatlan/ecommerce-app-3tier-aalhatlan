@@ -1,10 +1,10 @@
-name: "Deploy Infrastructure with Terraform"
+name: "Terraform Deploy Only"
 
 on:
-  workflow_dispatch:  # تشغّله يدويًا متى ما بغيت
+  workflow_dispatch:
   push:
     branches:
-      - infra-changes   # أو أي فرع خاص بالتيرافورم
+      - main
 
 jobs:
   terraform_deploy:
@@ -12,7 +12,6 @@ jobs:
     defaults:
       run:
         working-directory: infra
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -29,15 +28,4 @@ jobs:
         run: terraform init
 
       - name: Terraform Apply
-        run: |
-         terraform apply -auto-approve \
-         -var="aca_subnet_id=${{ vars.ACA_SUBNET_ID }}" \
-         -var="resource_group_name=${{ vars.RESOURCE_GROUP }}" \
-         -var="location=${{ vars.LOCATION }}" \
-         -var="project_name=${{ vars.PROJECT_NAME }}" \
-         -var="frontend_image=${{ vars.FRONTEND_IMAGE }}" \
-         -var="backend_image=${{ vars.BACKEND_IMAGE }}" \
-         -var="sql_admin_login=${{ secrets.SQL_ADMIN_LOGIN }}" \
-         -var="sql_fqdn=${{ vars.SQL_FQDN }}" \
-         -var="sql_admin_password=${{ secrets.SQL_ADMIN_PASSWORD }}"
-
+        run: terraform apply -auto-approve
