@@ -28,6 +28,9 @@ jobs:
       TF_VAR_fe_tag: ${{ vars.FE_TAG }}
       TF_VAR_be_image_name: ${{ vars.BE_IMAGE_NAME }}
       TF_VAR_be_tag: ${{ vars.BE_TAG }}
+      #sql server
+      TF_VAR_sql_admin_login: ${{ secrets.SQL_ADMIN_LOGIN }}
+      TF_VAR_sql_admin_password: ${{ secrets.SQL_ADMIN_PASSWORD }}
 
     steps:
       - name: Checkout Code
