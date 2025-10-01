@@ -42,15 +42,19 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
-      - name: Import Existing Resources (Optional)
+      - name: Import Existing Resources
+        working-directory: infra
         run: |
+          # Resource Group
           terraform import azurerm_resource_group.resource_group \
           /subscriptions/${{ secrets.SUBSCRIPTION_ID }}/resourceGroups/${{ vars.RESOURCE_GROUP }} || true
+          
+          # Service Plan (Frontend)
+          terraform import 'azurerm_service_plan.frontend_plan' \
+          /subscriptions/${{ secrets.SUBSCRIPTION_ID }}/resourceGroups/${{ vars.RESOURCE_GROUP }}/providers/Microsoft.Web/serverFarms/${{ vars.RESOURCE_PREFIX }}-fe-service-plan-${{ vars.AUTHOR }} || true
 
-          terraform import azurerm_service_plan.service_plan["${{ vars.RESOURCE_PREFIX }}-fe-service-plan-${{ vars.AUTHOR }}"] \
-          /subscriptions/${{ secrets.SUBSCRIPTION_ID }}/resourceGroups/${{ vars.RESOURCE_GROUP }}/providers/Microsoft.Web/serverfarms/${{ vars.RESOURCE_PREFIX }}-fe-service-plan-${{ vars.AUTHOR }} || true
-
-          terraform import azurerm_linux_web_app.fe_app \
+          # Web App (Frontend)
+          terraform import 'azurerm_linux_web_app.frontend_app' \
           /subscriptions/${{ secrets.SUBSCRIPTION_ID }}/resourceGroups/${{ vars.RESOURCE_GROUP }}/providers/Microsoft.Web/sites/${{ vars.RESOURCE_PREFIX }}-fe-app-${{ vars.AUTHOR }} || true
 
       - name: Terraform Apply
