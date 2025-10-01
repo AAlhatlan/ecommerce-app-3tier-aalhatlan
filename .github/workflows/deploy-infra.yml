@@ -29,14 +29,7 @@ jobs:
         working-directory: infra
         run: terraform init
 
-      - name: Terraform Plan
-        working-directory: infra
-        run: |
-         terraform plan
-          -var="subscription_id=${{ secrets.SUBSCRIPTION_ID }}" \
-          -var="location=westeurope" \
-          -var="resource_group_name=${{ vars.RESOURCE_GROUP }}" 
-        
+     
       
       - name: Terraform Apply
         working-directory: infra
