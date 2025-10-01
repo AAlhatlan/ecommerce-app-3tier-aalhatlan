@@ -1,7 +1,7 @@
 locals {
   be_app_name          = "${lower(var.resource_prefix)}-be-app-${lower(replace(var.author, " ", "-"))}"
   service_plan_name_be = "${lower(var.resource_prefix)}-be-service-plan-${lower(replace(var.author, " ", "-"))}"
-  public_access        = true
+  public_access_be        = true
   be_sku               = "B1" # Basic plan
   be_hostname          = "${local.be_app_name}.azurewebsites.net"
 }
@@ -25,7 +25,7 @@ resource "azurerm_linux_web_app" "backend_app" {
   location            = var.location
   resource_group_name = var.resource_group_name
   service_plan_id     = azurerm_service_plan.fbackend_plan.id
-  public_network_access_enabled = local.public_access
+  public_network_access_enabled = local.public_access_be
 
   site_config {
     always_on = true
