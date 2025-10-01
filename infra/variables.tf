@@ -1,16 +1,36 @@
+variable "subscription_id" {
+  description = "Azure subscription ID"
+  type        = string
+}
+
+variable "resource_prefix" {
+  type        = string
+  description = "Prefix for naming Azure resources"
+}
+
+variable "author" {
+  type        = string
+  description = "Author name to include in resource naming"
+}
+
 variable "resource_group_name" {
   type        = string
-  description = "Name of the Resource Group"
+  description = "Azure Resource Group name"
 }
 
 variable "location" {
   type        = string
-  description = "Azure region where resources will be created"
+  description = "Azure Region"
 }
 
-variable "subscription_id" {
-  description = "Azure subscription ID"
+variable "fe_image_name" {
   type        = string
+  description = "Frontend Docker image name (e.g. aalhatlan/assignment-fe)"
+}
+
+variable "fe_tag" {
+  type        = string
+  description = "Docker image tag (e.g. latest)"
 }
 
 
