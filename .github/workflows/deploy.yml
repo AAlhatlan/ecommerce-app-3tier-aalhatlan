@@ -31,14 +31,24 @@ jobs:
       - name: Setup Buildx
         uses: docker/setup-buildx-action@v3
 
+      # 🆕 Step 1: Generate Backend URL dynamically
+      - name: Generate Backend URL
+        id: backend_url
+        run: |
+          BACKEND_URL="${{ vars.RESOURCE_PREFIX }}-be-app-${{ vars.AUTHOR }}.azurewebsites.net"
+          echo "backend_url=$BACKEND_URL" >> $GITHUB_OUTPUT
+
+      # 🆕 Step 2: Build & Push Frontend with dynamic API URL
       - name: Build & Push Frontend
-        uses: docker/build-push-action@v6
-        with:
-          context: ./ecommerce-app-frontend
-          push: true
-          tags: |
-            ${{ env.FE_IMAGE }}:${{ steps.version.outputs.frontend }}
-            ${{ env.FE_IMAGE }}:latest
+        run: |
+          docker build --platform linux/amd64 \
+            --build-arg REACT_APP_API_URL=https://${{ steps.backend_url.outputs.backend_url }}/api \
+            -t ${{ env.FE_IMAGE }}:${{ steps.version.outputs.frontend }} \
+            -t ${{ env.FE_IMAGE }}:latest \
+            ./ecommerce-app-frontend
+
+          docker push ${{ env.FE_IMAGE }}:${{ steps.version.outputs.frontend }}
+          docker push ${{ env.FE_IMAGE }}:latest
 
   build_backend:
     name: Build & Push Backend
