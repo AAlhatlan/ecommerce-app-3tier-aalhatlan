@@ -44,3 +44,5 @@ variable "sql_fqdn" {
   description = "Fully qualified domain name of the SQL server"
   type        = string
 }
+
+resource_group_name
