@@ -31,7 +31,9 @@ jobs:
       #sql server
       TF_VAR_sql_admin_login: ${{ secrets.SQL_ADMIN_LOGIN }}
       TF_VAR_sql_admin_password: ${{ secrets.SQL_ADMIN_PASSWORD }}
-
+      TF_VAR_sql_server_fqdn: ${{ secrets.SQL_SERVER_FQDN }}
+      TF_VAR_sql_database_name: ${{ secrets.SQL_DATABASE_NAME }}
+      TF_VAR_jwt_secret: ${{ secrets.JWT_SECRET }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4

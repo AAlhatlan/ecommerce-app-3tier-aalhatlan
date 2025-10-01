@@ -54,3 +54,17 @@ variable "sql_admin_password" {
   description = "Admin password for SQL Server"
   sensitive   = true
 }
+
+variable "sql_server_fqdn" {
+  type = string
+}
+
+variable "sql_database_name" {
+  type = string
+}
+
+
+variable "jwt_secret" {
+  type      = string
+  sensitive = true
+}
