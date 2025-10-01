@@ -35,9 +35,14 @@ jobs:
         working-directory: infra
         run: |
          terraform apply -auto-approve \
-          -var="subscription_id=${{ secrets.SUBSCRIPTION_ID }}" \
-          -var="location=westeurope" \
-          -var="resource_group_name=${{ vars.RESOURCE_GROUP }}" 
+         -var="subscription_id=${{ secrets.SUBSCRIPTION_ID }}" \
+         -var="location=${{ vars.LOCATION }}" \
+         -var="resource_group_name=${{ vars.RESOURCE_GROUP }}" \
+         -var="author=${{ vars.AUTHOR }}" \
+         -var="resource_prefix=${{ vars.RESOURCE_PREFIX }}" \
+         -var="fe_image_name=${{ vars.FE_IMAGE_NAME }}" \
+         -var="fe_tag=${{ vars.FE_TAG }}"
+ 
 
 
 
