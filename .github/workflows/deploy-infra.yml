@@ -31,6 +31,7 @@ jobs:
       
       - name: Terraform Apply
         run: terraform apply -auto-approve
-          -var="location=${{ vars.LOCATION }}"
+          -var="azure_credentials=${{ secrets.AZURE_CREDENTIALS }}" \
+          -var="location=${{ vars.LOCATION }}"\
           -var="resource_group_name=${{ vars.RESOURCE_GROUP_NAME }}"
 
