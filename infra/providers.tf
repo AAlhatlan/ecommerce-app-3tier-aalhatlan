@@ -17,8 +17,8 @@ terraform {
   }
 
   backend "azurerm" {
-    resource_group_name  = "aalhatlan-rg-assignmenttwo"
-    storage_account_name = "tfstate20606"
+    resource_group_name  = "tfstate-rg-new"
+    storage_account_name = "tfstate21021"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
   }
