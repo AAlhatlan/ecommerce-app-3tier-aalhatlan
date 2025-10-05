@@ -1,7 +1,3 @@
-variable "subscription_id" {
-  description = "Azure subscription ID"
-  type        = string
-}
 
 variable "resource_prefix" {
   type        = string
@@ -64,7 +60,3 @@ variable "sql_database_name" {
 }
 
 
-variable "jwt_secret" {
-  type      = string
-  sensitive = true
-}

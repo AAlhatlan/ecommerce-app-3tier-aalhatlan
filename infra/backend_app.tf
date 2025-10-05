@@ -58,10 +58,6 @@ resource "azurerm_linux_web_app" "backend_app" {
     DB_TRUST_SERVER_CERTIFICATE = "false"
     DB_CONNECTION_TIMEOUT       = "30000"
 
-    # JWT configuration
-    JWT_SECRET                  = var.jwt_secret
-    JWT_EXPIRES_IN              = "7d"
-
     #  CORS configuration - dynamically set to frontend hostname
     CORS_ORIGIN = "https://${local.frontend_hostname_for_cors}"
 
