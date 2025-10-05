@@ -59,4 +59,6 @@ variable "sql_database_name" {
   type = string
 }
 
-
+variable "tags" {
+ type = map(any)
+}
