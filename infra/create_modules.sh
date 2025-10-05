@@ -8,13 +8,13 @@ cat > modules/network/main.tf <<'EOF'
 resource "azurerm_virtual_network" "vnet" {
   name                = "${var.project_name}-vnet"
   address_space       = ["10.0.0.0/16"]
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = azurerm_resource_group.resource_group.location
+  resource_group_name = azurerm_resource_group.resource_group.name
 }
 
 resource "azurerm_subnet" "aca_subnet" {
   name                 = "aca-subnet"
-  resource_group_name  = var.resource_group_name
+  resource_group_name  = azurerm_resource_group.resource_group.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.1.0/24"]
   delegation {
@@ -27,19 +27,19 @@ resource "azurerm_subnet" "aca_subnet" {
 
 resource "azurerm_subnet" "sql_pe_subnet" {
   name                 = "sql-pe-subnet"
-  resource_group_name  = var.resource_group_name
+  resource_group_name  = azurerm_resource_group.resource_group.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.2.0/24"]
 }
 
 resource "azurerm_private_dns_zone" "sql_zone" {
   name                = "privatelink.database.windows.net"
-  resource_group_name = var.resource_group_name
+  resource_group_name = azurerm_resource_group.resource_group.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "sql_zone_link" {
   name                  = "${var.project_name}-sql-dnslink"
-  resource_group_name   = var.resource_group_name
+  resource_group_name   = azurerm_resource_group.resource_group.name
   private_dns_zone_name = azurerm_private_dns_zone.sql_zone.name
   virtual_network_id    = azurerm_virtual_network.vnet.id
 }
@@ -72,8 +72,8 @@ EOF
 cat > modules/sql/main.tf <<'EOF'
 resource "azurerm_mssql_server" "sql" {
   name                         = "${var.project_name}-sqlserver"
-  resource_group_name          = var.resource_group_name
-  location                     = var.location
+  resource_group_name          = azurerm_resource_group.resource_group.name
+  location                     = azurerm_resource_group.resource_group.location
   version                      = "12.0"
   administrator_login          = var.sql_admin_login
   administrator_login_password = var.sql_admin_password
@@ -88,8 +88,8 @@ resource "azurerm_mssql_database" "db" {
 
 resource "azurerm_private_endpoint" "sql_pe" {
   name                = "${var.project_name}-sql-pe"
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = azurerm_resource_group.resource_group.location
+  resource_group_name = azurerm_resource_group.resource_group.name
   subnet_id           = var.sql_pe_subnet_id
 
   private_service_connection {
@@ -103,7 +103,7 @@ resource "azurerm_private_endpoint" "sql_pe" {
 resource "azurerm_private_dns_a_record" "sql_record" {
   name                = azurerm_mssql_server.sql.name
   zone_name           = var.private_dns_zone_name
-  resource_group_name = var.resource_group_name
+  resource_group_name = azurerm_resource_group.resource_group.name
   ttl                 = 300
   records             = [azurerm_private_endpoint.sql_pe.private_service_connection[0].private_ip_address]
 }
@@ -131,15 +131,15 @@ EOF
 cat > modules/aca/main.tf <<'EOF'
 resource "azurerm_container_app_environment" "aca_env" {
   name                = "${var.project_name}-aca-env"
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = azurerm_resource_group.resource_group.location
+  resource_group_name = azurerm_resource_group.resource_group.name
   infrastructure_subnet_id = var.aca_subnet_id
 }
 
 resource "azurerm_container_app" "backend" {
   name                         = "${var.project_name}-be"
   container_app_environment_id = azurerm_container_app_environment.aca_env.id
-  resource_group_name          = var.resource_group_name
+  resource_group_name          = azurerm_resource_group.resource_group.name
   revision_mode                = "Single"
 
   template {
@@ -164,7 +164,7 @@ resource "azurerm_container_app" "backend" {
 resource "azurerm_container_app" "frontend" {
   name                         = "${var.project_name}-fe"
   container_app_environment_id = azurerm_container_app_environment.aca_env.id
-  resource_group_name          = var.resource_group_name
+  resource_group_name          = azurerm_resource_group.resource_group.name
   revision_mode                = "Single"
 
   template {
