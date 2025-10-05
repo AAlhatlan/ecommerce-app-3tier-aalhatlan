@@ -10,3 +10,4 @@ sql_admin_login = "ahmad"
 sql_admin_password = "Ss12121212@#"
 sql_server_fqdn = "myproject-sqlserver.database.windows.net"
 sql_database_name = "ecom-db"
+tags = { "env" : "production" }
