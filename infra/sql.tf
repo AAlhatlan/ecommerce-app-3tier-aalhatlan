@@ -9,7 +9,7 @@ resource "azurerm_mssql_server" "sql_server" {
 }
 
 resource "azurerm_mssql_database" "sql_database" {
-  name      = "ecommerce_db"
+  name      = "ecom-db"
   server_id = azurerm_mssql_server.sql_server.id
   sku_name  = "Basic"
 }
