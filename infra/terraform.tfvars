@@ -8,6 +8,6 @@ be_image_name = "aalhatlan/assignment-be"
 be_tag = "latest"
 sql_admin_login = "ahmad"
 sql_admin_password = "Ss12121212@#"
-sql_server_fqdn = "myproject-sqlserver.database.windows.net"
+sql_server_fqdn = "ecommerce-sqlserver-aalhatlan.database.windows.net"
 sql_database_name = "ecom-db"
 tags = { "env" : "production" }
