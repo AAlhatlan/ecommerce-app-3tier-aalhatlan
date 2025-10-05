@@ -15,9 +15,8 @@ terraform {
       version = "4.0.6"
     }
   }
-}
 
-backend "azurerm" {
+  backend "azurerm" {
     resource_group_name  = "aalhatlan-rg-assignmenttwo"
     storage_account_name = "tfstate20606"
     container_name       = "tfstate"
@@ -30,11 +29,8 @@ provider "azurerm" {
   subscription_id = var.subscription_id
 }
 
-
-
 provider "random" {
 }
 
 provider "tls" {
-
 }
